@@ -11,6 +11,7 @@ html {
   body {
     font-family: sans-serif;
     margin: 0;
+
     background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
   }
   
@@ -25,12 +26,13 @@ html {
     width: 100%;
     text-align: center;
     transition: all 0.5s;
+
   }
   
   a:hover {
     background: rgba(0, 0, 0, 0.3);
   }
-  
+
   .wrapper {
     margin: 0 auto;
   }
@@ -66,3 +68,127 @@ html {
       flex: 100%;
     }
   }
+
+.nav-pills {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+
+.nav-pills li {
+  flex: 1;
+}
+
+
+
+/* Navigation bar */
+.search-box-wrapper{
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  width: 1000px; /* 宽度 */
+  height: 50px; /* 高度 */
+  margin: 30px auto 0;
+ /* 在页面中水平居中 */
+  background-color: #B0E0E6;
+  border-radius: 10px; /* 圆角 */
+  padding: 0 20px; /* 内边距 */
+}
+.search-box-input {
+  flex: 1; /* 填充剩余空间 */
+  border: none; /* 去掉边框 */
+  font-size: 20px;
+   color:white;
+
+  background-color: transparent;
+}
+
+.search-box-button {
+  border: none; /* 去掉边框 */
+  font-size: 20px;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none; /* 去掉聚焦时的边框 */
+}
+
+/*
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+nav ul {
+	display: flex;
+	list-style: none;
+}
+
+nav ul li {
+	margin: 0
+*/
+
+
+/* Product Detail Page */
+.item-container {
+    margin-top:50px;
+    width:1100px;
+    margin-left:auto;
+    margin-right:auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	background-color: #f5f5f5;
+	padding: 20px;
+}
+
+.item {
+	width: 23%;
+	margin-bottom: 20px;
+	background-color: #fff;
+	padding: 20px;
+	text-align: center;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.item img {
+	width: 220px;
+	height: 180px;
+    border:0px;
+}
+
+.item h3 {
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.item p {
+	font-size: 14px;
+	margin-top: 5px;
+	color: #666;
+}
+.item-font{
+    font-size:17px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination a {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  background-color: #f5f5f5;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+}
