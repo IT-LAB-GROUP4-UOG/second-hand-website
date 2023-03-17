@@ -25,7 +25,3 @@ def myPurchase(request):
 def mySell(request):
     return HttpResponse("My Sell")
 
-
-# git test
-
-

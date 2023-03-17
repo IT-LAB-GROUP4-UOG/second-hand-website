@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title_block %}
+            This is a base page
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+<div>
+    {% block body_block %}
+        This is body_block's default content.
+
+
+    {% endblock %}
+    <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
+    <li><a href="{% url 'auth_logout' %}?next={% url 'home' %}">Logout</a></li>
+    <li><a href="{% url 'auth_login' %}">Login</a></li>
+</div>
+
+</body>
+</html>
