@@ -3,10 +3,14 @@ from django.contrib.auth.decorators import login_required
 from .models import Item, ItemImage, User, Order
 from .forms import ItemForm
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 
 def home(request):
-    items = Item.objects.all()
+    items_list = Item.objects.all()
+    paginator = Paginator(items_list, 8)
+    page = request.GET.get('page')
+    items = paginator.get_page(page)
     return render(request, 'rangoMarket/home.html', {'items': items})
 
 
