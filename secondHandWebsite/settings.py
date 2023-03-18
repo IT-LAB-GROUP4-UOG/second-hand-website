@@ -133,7 +133,7 @@ MEDIA_URL = 'media/'
 # the registration app
 REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'rangoMarket:home'
 LOGIN_URL = 'auth_login'
 
 
