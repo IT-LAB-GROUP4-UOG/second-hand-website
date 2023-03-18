@@ -30,7 +30,7 @@
             <ul class="nav nav-pills">
                 <li role="presentation"><a href="{% url 'rangoMarket:home' %}">Home Page</a></li>
                 {% if user.is_authenticated %}
-                    <li role="presentation"><a href="{% url 'rangoMarket:post' %}">My Post</a></li>
+                    <li role="presentation"><a href="{% url 'rangoMarket:my_post' %}">My Post</a></li>
                     <li role="presentation"><a href="{% url 'rangoMarket:purchase' %}">My Purchase</a></li>
                     <li role="presentation"><a href="{% url 'auth_logout' %}?next={% url 'rangoMarket:home' %}">Log out</a></li>
                 {% else %}

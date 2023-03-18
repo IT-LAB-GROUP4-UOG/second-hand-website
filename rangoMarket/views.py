@@ -18,11 +18,13 @@ def home_old(request):
     return render(request, 'rangoMarket/home-old.html')
 
 
-
-
 @login_required
-def post(request):
-    return render(request, 'rangoMarket/post.html')
+def my_post(request):
+    items_list = Item.objects.filter(seller=request.user)
+    paginator = Paginator(items_list, 8)
+    page = request.GET.get('page')
+    items = paginator.get_page(page)
+    return render(request, 'rangoMarket/my_post.html', {'items': items})
 
 
 @login_required
