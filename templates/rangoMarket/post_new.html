@@ -1,0 +1,15 @@
+{% extends 'rangoMarket/base.html' %}
+
+{% block title_block %}
+   Post a new item
+{% endblock %}
+
+{% block body_block %}
+    <h2>Post a new item</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Item</button>
+    </form>
+
+{% endblock %}
