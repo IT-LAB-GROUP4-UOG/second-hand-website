@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'rangoMarket/home.html')
 
 
 def signup(request):
@@ -15,13 +15,13 @@ def signin(request):
 
 
 def myPost(request):
-    return HttpResponse("My Post")
+    return HttpResponse(request, "My Post")
 
 
 def myPurchase(request):
-    return HttpResponse("My Purchase")
+    return HttpResponse(request, "My Purchase")
 
 
 def mySell(request):
-    return HttpResponse("My Sell")
+    return HttpResponse(request, "My Sell")
 

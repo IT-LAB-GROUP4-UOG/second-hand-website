@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>
-        {% block titile_block %}
+        {% block title_block %}
             This is a title block!
         {% endblock %}
     </title>
@@ -29,11 +29,10 @@
             <ul class="nav nav-pills">
                 <li role="presentation"><a href="{% url 'rangoMarket:home' %}">Home Page</a></li>
                 {% if user.is_authenticated %}
-                    <li role="presentation"><a href="{% url 'rangoMarket:mySell' %}">My Sell</a></li>
-                    <li role="presentation"><a href="{% url 'rangoMarket:myPurchase' %}">Log in</a></li>
+                    <li role="presentation"><a href="{% url 'rangoMarket:post' %}">My Post</a></li>
+                    <li role="presentation"><a href="{% url 'rangoMarket:purchase' %}">My Purchase</a></li>
                     <li role="presentation"><a href="{% url 'auth_logout' %}">Log out</a></li>
                 {% else %}
-                <li role="presentation"><a href="{% url 'rangoMarket:myPurchase' %}">Log in</a></li>
                 <li role="presentation"><a href="{% url 'auth_login' %}">Log in</a></li>
                 <li role="presentation"><a href="{% url 'registration_register' %}">Register</a></li>
                 {#                <li role="presentation"><a href="./userProfile.html">User</a></li>#}

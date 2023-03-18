@@ -15,16 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from secondHandWebsite import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.home, name='home'),
-    path("signup/", views.signup),
-    path("signin/", views.signin),
-    path("mypost/", views.myPost),
-    path("mysell/", views.mySell),
-    path("mypurchase/", views.myPurchase),
-
+    path("", include('rangoMarket.urls')),
     path('accounts/', include('registration.backends.simple.urls'))
 ]
