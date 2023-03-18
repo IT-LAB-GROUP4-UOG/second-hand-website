@@ -1,12 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Item, User, Order
+from .models import Item, ItemImage, User, Order
 from .forms import ItemForm
-
-
-
-
-
 from django.http import HttpResponse
 
 
@@ -25,7 +20,7 @@ def purchase(request):
 
 
 @login_required
-def post_new(request):
+def post_item(request):
 
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
@@ -33,10 +28,14 @@ def post_new(request):
             item = form.save(commit=False)
             item.seller = request.user
             item.save()
-            return redirect('item_detail', item_id=item.id)
+
+            for image in request.FILES.getlist('images'):
+                ItemImage.objects.create(item=item, image=image)
+
+            return redirect(reverse('rangoMarket:item_detail', kwargs={'item_id': item.id}))
     else:
         form = ItemForm()
-    return render(request, 'rangoMarket/post_new.html', {'form': form})
+    return render(request, 'rangoMarket/post_item.html', {'form': form})
 
 
 def item_detail(request, item_id):
