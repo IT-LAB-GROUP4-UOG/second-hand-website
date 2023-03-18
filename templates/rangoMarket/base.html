@@ -32,7 +32,7 @@
                 {% if user.is_authenticated %}
                     <li role="presentation"><a href="{% url 'rangoMarket:post' %}">My Post</a></li>
                     <li role="presentation"><a href="{% url 'rangoMarket:purchase' %}">My Purchase</a></li>
-                    <li role="presentation"><a href="{% url 'auth_logout' %}">Log out</a></li>
+                    <li role="presentation"><a href="{% url 'auth_logout' %}?next={% url 'rangoMarket:home' %}">Log out</a></li>
                 {% else %}
                 <li role="presentation"><a href="{% url 'auth_login' %}">Log in</a></li>
                 <li role="presentation"><a href="{% url 'registration_register' %}">Register</a></li>

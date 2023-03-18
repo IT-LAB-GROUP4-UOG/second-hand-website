@@ -6,7 +6,14 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render(request, 'rangoMarket/home.html')
+    items = Item.objects.all()
+    return render(request, 'rangoMarket/home.html', {'items': items})
+
+
+def home_old(request):
+    return render(request, 'rangoMarket/home-old.html')
+
+
 
 
 @login_required
