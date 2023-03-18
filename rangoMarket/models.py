@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 
 class Item(models.Model):
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_post_items')
     title = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -21,13 +21,20 @@ class Item(models.Model):
 
 
 class Order(models.Model):
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    STATUS_CHOICES = (
+        ('PENDING', 'Pending'),
+        ('FINISHED', 'Finished'),
+        ('CANCELLED', 'Cancelled'),
+    )
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer_orders')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_orders')
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.item.__str__() + " <from> " + self.seller.username + " <to> " + self.buyer.username
+        return self.item.__str__() + " <from> " + self.seller.username \
+            + " <to> " + self.buyer.username + " <status> " + self.status
 
 
 
