@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Item, User, Order
 from .forms import ItemForm
+
 
 
 
@@ -15,7 +16,7 @@ def home(request):
 
 @login_required
 def post(request):
-    return HttpResponse(request, "My Post")
+    return render(request, 'rangoMarket/post.html')
 
 
 @login_required
@@ -38,6 +39,9 @@ def post_new(request):
     return render(request, 'rangoMarket/post_new.html', {'form': form})
 
 
+def item_detail(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    return render(request, 'rangoMarket/item_detail.html', {'item': item})
 
 
 

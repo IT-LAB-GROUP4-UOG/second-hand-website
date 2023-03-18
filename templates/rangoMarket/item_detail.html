@@ -1,0 +1,12 @@
+{% extends "rangoMarket/base.html" %}
+
+{% block content %}
+    <h2>{{ item.title }}</h2>
+    <p>Seller: {{ item.seller.username }}</p>
+    <p>Description: {{ item.description }}</p>
+    <p>Price: {{ item.price }}</p>
+    {% if item.image %}
+    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+    {% endif %}
+    <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>
+{% endblock %}
