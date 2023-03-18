@@ -9,6 +9,7 @@
     <div class="item-container">
         {% for item in items %}
             <div class="item">
+            <a href="{% url 'rangoMarket:item_detail' item_id=item.id %}">
                 {% if item.images.all %}
                     <img src="{{ item.images.all.0.image.url }}" alt="Item {{ forloop.counter }}" border="0">
                 {% else %}
@@ -18,10 +19,10 @@
                 <div class="item-font">{{ item.title }}</div>
 {#                <div class="item-font">{{ item.description }}</div>#}
                 <p>£{{ item.price|floatformat:2 }}</p>
+            </a>
             </div>
         {% endfor %}
     </div>
-
 
     <!-- Pagination -->
 <div class="container">
