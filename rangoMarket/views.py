@@ -6,22 +6,14 @@ def home(request):
     return render(request, 'rangoMarket/home.html')
 
 
-def signup(request):
-    return render(request, 'signup.html')
-
-
-def signin(request):
-    return render(request, 'signin.html')
-
-
-def myPost(request):
+def post(request):
     return HttpResponse(request, "My Post")
 
 
-def myPurchase(request):
+def purchase(request):
     return HttpResponse(request, "My Purchase")
 
 
-def mySell(request):
-    return HttpResponse(request, "My Sell")
+def post_new(request):
+    return HttpResponse(request, "Post New item")
 
