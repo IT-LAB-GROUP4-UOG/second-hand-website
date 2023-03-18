@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>
+        {% block titile_block %}
+            This is a title block!
+        {% endblock %}
+    </title>
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.4.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/index.css"/>
+    <style></style>
+</head>
+
+
+<body>
+<header>
+    <!--顶部菜单栏-->
+    <div class="wrapper">
+        <nav class="flex-nav">
+            <ul class="nav nav-pills">
+                <li role="presentation"><a href="{% url 'rangoMarket:home' %}">Home Page</a></li>
+                {% if user.is_authenticated %}
+                    <li role="presentation"><a href="{% url 'rangoMarket:mySell' %}">My Sell</a></li>
+                    <li role="presentation"><a href="{% url 'rangoMarket:myPurchase' %}">Log in</a></li>
+                    <li role="presentation"><a href="{% url 'auth_logout' %}">Log out</a></li>
+                {% else %}
+                <li role="presentation"><a href="{% url 'rangoMarket:myPurchase' %}">Log in</a></li>
+                <li role="presentation"><a href="{% url 'auth_login' %}">Log in</a></li>
+                <li role="presentation"><a href="{% url 'registration_register' %}">Register</a></li>
+                {#                <li role="presentation"><a href="./userProfile.html">User</a></li>#}
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+{% block body_block %}
+    This is a body block.
+{% endblock %}
+
+<scripts src="static/plugins/bootstrap-3.4.1/js/bootstrap.js"></scripts>
+<script src="static/plugins/bootstrap-3.4.1/js/jquery-3.6.3.min.js"></script>
+</body>
+
+</html>
