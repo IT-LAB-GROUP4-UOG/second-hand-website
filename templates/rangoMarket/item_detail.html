@@ -1,17 +1,45 @@
 {% extends "rangoMarket/base.html" %}
 
 {% block body_block %}
-    <h2>{{ item.title }}</h2>
-    <p>Seller: {{ item.seller.username }}</p>
-    <p>Description: {{ item.description }}</p>
-    <p>Price: {{ item.price }}</p>
-    {% for image in item.images.all %}
-    <img src="{{ image.image.url }}" alt="{{ item.title }}">
-    {% empty %}
-    <p>No images available.</p>
-    {% endfor %}
+<link rel="stylesheet" href="../static/item-detail.css" />
+ {#   <h2>{{ item.title }}</h2>#}
+  {#  <p>Seller: {{ item.seller.username }}</p>#}
+  {#  <p>Description: {{ item.description }}</p>#}
+   {# <p>Price: {{ item.price }}</p>#}
+
+  {#  {% for image in item.images.all %} #}
+  {#  <img src="{{ image.image.url }}" alt="{{ item.title }}"> #}
+  {# {% empty %} #}
+   {# <p>No images available.</p> #}
+   {# {% endfor %} #}
+
+<div class="product-container">
+     <div class="container">
+            <div class="product-image">
+                {% for image in item.images.all %}
+                <img src="{{ image.image.url }}" alt="{{ item.title }}">
+                {% empty %}
+                <p>No images available.</p>
+                {% endfor %}
+            </div>
+
+            <div class="product-details">
+                <h1 class="product-name">{{ item.title }}</h1>
+                <p class="product-price">Price: {{ item.price }}</p>
+                <p class="user-name">Seller: {{ item.seller.username }}</p>
+                <p class="product-description">Description: {{ item.description }}</p>
+                <p class="product-description">
+                    <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>
+                </p>
+                </div>
+     </div>
+</div>
+
+
 {#    {% if item.image %}#}
 {#    <img src="{{ item.image.url }}" alt="{{ item.title }}">#}
 {#    {% endif %}#}
-    <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>
+
+
+  {#   <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>#}
 {% endblock %}

@@ -29,6 +29,7 @@
         <nav class="flex-nav">
             <ul class="nav nav-pills">
                 <li role="presentation"><a href="{% url 'rangoMarket:home' %}">Home Page</a></li>
+                <li role="presentation"><a href="{% url 'rangoMarket:about' %}">About Us</a></li>
                 {% if user.is_authenticated %}
                     <li role="presentation"><a href="{% url 'rangoMarket:my_post' %}">My Post</a></li>
                     <li role="presentation"><a href="{% url 'rangoMarket:purchase' %}">My Purchase</a></li>
