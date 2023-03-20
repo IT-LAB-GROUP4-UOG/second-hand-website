@@ -1,19 +1,22 @@
 {% extends 'rangoMarket/base.html' %}
 
 {% block body_block %}
-    <h2>Order Details</h2>
+    <link rel="stylesheet" href="../static/order_detail.css"/>
+
+  <div class="order-details-container">
     {% for image in order.item.images.all %}
-        <img src="{{ image.image.url }}" alt="{{ order.item.title }}">
+        <img src="{{ image.image.url }}" alt="{{ order.item.title }}" class="order-image">
     {% empty %}
         <p>No images available.</p>
     {% endfor %}
-    <p>Item: {{ order.item.title }}</p>
-    <p>Price: ${{ order.item.price }}</p>
-    <p>Status: {{ order.get_status_display }}</p>
-    <p>Buyer: {{ order.buyer.username }} - Email: {{ order.buyer.email }}</p>
-    <p>Seller: {{ order.seller.username }} - Email: {{ order.seller.email }}</p>
-
-
+    <div>
+        <p><h2>Item: {{ order.item.title }}</h2></p>
+        <p>Price: ${{ order.item.price }}</p>
+        <p>Status: {{ order.get_status_display }}</p>
+        <p>Buyer: {{ order.buyer.username }} - Email: {{ order.buyer.email }}</p>
+        <p>Seller: {{ order.seller.username }} - Email: {{ order.seller.email }}</p>
+    </div>
+</div>
     {% if order.status == 'PENDING' %}
         <!-- finish order button -->
         <div>
