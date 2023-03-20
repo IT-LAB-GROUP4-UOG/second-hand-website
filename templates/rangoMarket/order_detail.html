@@ -1,7 +1,12 @@
 {% extends 'rangoMarket/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Order detail for {{ order.item.title }}
+{% endblock %}
 
 {% block body_block %}
-    <link rel="stylesheet" href="../static/order_detail.css"/>
+    <link rel="stylesheet" href="{% static 'order_detail.css' %}"/>
 
   <div class="order-details-container">
     {% for image in order.item.images.all %}

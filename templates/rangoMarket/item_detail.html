@@ -1,7 +1,12 @@
 {% extends "rangoMarket/base.html" %}
+{% load static %}
+
+{% block title_block %}
+    Item detail for {{ item.title }}
+{% endblock %}
 
 {% block body_block %}
-    <link rel="stylesheet" href="../static/item-detail.css"/>
+    <link rel="stylesheet" href="{% static 'item-detail.css' %}"/>
     {#   <h2>{{ item.title }}</h2>#}
     {#  <p>Seller: {{ item.seller.username }}</p>#}
     {#  <p>Description: {{ item.description }}</p>#}

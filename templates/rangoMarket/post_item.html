@@ -1,11 +1,12 @@
 {% extends 'rangoMarket/base.html' %}
+{% load static %}
 
 {% block title_block %}
    Post a new item
 {% endblock %}
 
 {% block body_block %}
-<link rel="stylesheet" href="../static/post_item.css" />
+<link rel="stylesheet" href="{% static 'post_item.css' %}" />
 
 
 <div class="post_container">
@@ -20,6 +21,5 @@
         </form>
     </div>
 </div>
-
 
 {% endblock %}
