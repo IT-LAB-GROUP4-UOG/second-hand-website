@@ -1,0 +1,12 @@
+{% extends 'rangoMarket/base.html' %}
+
+{% block body_block %}
+    <h2>My Sell</h2>
+    <ul>
+        {% for order in orders %}
+            <li><a href="{% url 'rangoMarket:order_detail' order_id=order.id %}">{{ order.item.title }} - Status: {{ order.get_status_display }}</a></li>
+        {% empty %}
+            <li>No orders found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

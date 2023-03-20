@@ -32,19 +32,22 @@
                 <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>
                 </p>
             </div>
-            {% if user.is_authenticated and item.seller != user %}
-                <button id="buy-button" data-item-id="{{ item.id }}">Buy</button>
-            {% endif %}
+            <p>
+                {% if user.is_authenticated and item.seller != user %}
+                    <button id="buy-button" data-item-id="{{ item.id }}">Buy</button>
+                    <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+                {% endif %}
+            </p>
         </div>
     </div>
 
 
-    <script>
-        document.getElementById('buy-button').addEventListener('click', async function () {
+ <script>
+        document.getElementById('buy-button').addEventListener('click', async function() {
             if (confirm("Are you sure you want to buy this item?")) {
-                const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+                const csrfToken = document.getElementById('csrf-token').value;
                 const itemId = this.dataset.itemId;
-                const response = await fetch('/item/${itemId}/buy/', {
+                const response = await fetch(`/item/${itemId}/buy/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -54,14 +57,13 @@
                 const data = await response.json();
                 if (data.status === 'success') {
                     alert('Item purchased successfully');
-                    window.location.href = '{% url 'rangoMarket:order_detail' 0 %}'.replace('0', data.order_id);
+                    window.location.href = `{% url 'rangoMarket:order_detail' 0 %}`.replace('0', data.order_id);
                 } else {
                     alert(data.message || 'An error occurred');
                 }
             }
         });
     </script>
-
 
     {#    {% if item.image %}#}
     {#    <img src="{{ item.image.url }}" alt="{{ item.title }}">#}
