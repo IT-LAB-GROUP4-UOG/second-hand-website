@@ -4,6 +4,7 @@ from .models import Item, ItemImage, User, Order
 from .forms import ItemForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 
 def home(request):
@@ -63,6 +64,24 @@ def post_item(request):
 def item_detail(request, item_id):
     item = get_object_or_404(Item, id=item_id)
     return render(request, 'rangoMarket/item_detail.html', {'item': item})
+
+
+def order_detail(request, order_id):
+    return render(request, 'rangoMarket/order_detail.html')
+
+
+def buy_item(request, item_id):
+    if request.method == 'POST':
+        item = get_object_or_404(Item, id=item_id)
+        if item.seller != request.user:
+            order = Order.objects.create(buyer=request.user, seller=item.seller, item=item)
+            return JsonResponse({'status': 'success', 'order_id': order.id})
+        else:
+            return JsonResponse({'status': 'error', 'message': "You can't buy your own item"})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+
 
 
 

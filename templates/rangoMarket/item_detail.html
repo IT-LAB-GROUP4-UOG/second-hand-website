@@ -1,25 +1,25 @@
 {% extends "rangoMarket/base.html" %}
 
 {% block body_block %}
-<link rel="stylesheet" href="../static/item-detail.css" />
- {#   <h2>{{ item.title }}</h2>#}
-  {#  <p>Seller: {{ item.seller.username }}</p>#}
-  {#  <p>Description: {{ item.description }}</p>#}
-   {# <p>Price: {{ item.price }}</p>#}
+    <link rel="stylesheet" href="../static/item-detail.css"/>
+    {#   <h2>{{ item.title }}</h2>#}
+    {#  <p>Seller: {{ item.seller.username }}</p>#}
+    {#  <p>Description: {{ item.description }}</p>#}
+    {# <p>Price: {{ item.price }}</p>#}
 
-  {#  {% for image in item.images.all %} #}
-  {#  <img src="{{ image.image.url }}" alt="{{ item.title }}"> #}
-  {# {% empty %} #}
-   {# <p>No images available.</p> #}
-   {# {% endfor %} #}
+    {#  {% for image in item.images.all %} #}
+    {#  <img src="{{ image.image.url }}" alt="{{ item.title }}"> #}
+    {# {% empty %} #}
+    {# <p>No images available.</p> #}
+    {# {% endfor %} #}
 
-<div class="product-container">
-     <div class="container">
+    <div class="product-container">
+        <div class="container">
             <div class="product-image">
                 {% for image in item.images.all %}
-                <img src="{{ image.image.url }}" alt="{{ item.title }}">
+                    <img src="{{ image.image.url }}" alt="{{ item.title }}">
                 {% empty %}
-                <p>No images available.</p>
+                    <p>No images available.</p>
                 {% endfor %}
             </div>
 
@@ -29,17 +29,44 @@
                 <p class="user-name">Seller: {{ item.seller.username }}</p>
                 <p class="product-description">Description: {{ item.description }}</p>
                 <p class="product-description">
-                    <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>
+                <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>
                 </p>
-                </div>
-     </div>
-</div>
+            </div>
+            {% if user.is_authenticated and item.seller != user %}
+                <button id="buy-button" data-item-id="{{ item.id }}">Buy</button>
+            {% endif %}
+        </div>
+    </div>
 
 
-{#    {% if item.image %}#}
-{#    <img src="{{ item.image.url }}" alt="{{ item.title }}">#}
-{#    {% endif %}#}
+    <script>
+        document.getElementById('buy-button').addEventListener('click', async function () {
+            if (confirm("Are you sure you want to buy this item?")) {
+                const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+                const itemId = this.dataset.itemId;
+                const response = await fetch('/item/${itemId}/buy/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken
+                    },
+                });
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('Item purchased successfully');
+                    window.location.href = '{% url 'rangoMarket:order_detail' 0 %}'.replace('0', data.order_id);
+                } else {
+                    alert(data.message || 'An error occurred');
+                }
+            }
+        });
+    </script>
 
 
-  {#   <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>#}
+    {#    {% if item.image %}#}
+    {#    <img src="{{ item.image.url }}" alt="{{ item.title }}">#}
+    {#    {% endif %}#}
+
+
+    {#   <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>#}
 {% endblock %}
