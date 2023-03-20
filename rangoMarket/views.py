@@ -36,7 +36,7 @@ def my_post(request):
 
 @login_required
 def my_sell(request):
-    orders_list = Order.objects.filter(seller=request.user)
+    orders_list = Order.objects.filter(seller=request.user).order_by('-created_at')
     paginator = Paginator(orders_list, 8)
     page = request.GET.get('page')
     orders = paginator.get_page(page)
@@ -45,7 +45,7 @@ def my_sell(request):
 
 @login_required
 def my_purchase(request):
-    orders_list = Order.objects.filter(buyer=request.user)
+    orders_list = Order.objects.filter(buyer=request.user).order_by('-created_at')
     paginator = Paginator(orders_list, 8)
     page = request.GET.get('page')
     orders = paginator.get_page(page)
