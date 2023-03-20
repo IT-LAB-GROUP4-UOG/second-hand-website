@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Item, ItemImage, User, Order
 from .forms import ItemForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
@@ -66,8 +66,12 @@ def item_detail(request, item_id):
     return render(request, 'rangoMarket/item_detail.html', {'item': item})
 
 
+@login_required
 def order_detail(request, order_id):
-    return render(request, 'rangoMarket/order_detail.html')
+    order = get_object_or_404(Order, id=order_id)
+    if request.user != order.buyer and request.user != order.seller:
+        return HttpResponseForbidden("You don't have permission to view this order.")
+    return render(request, 'rangoMarket/order_detail.html', {'order': order})
 
 
 def buy_item(request, item_id):
