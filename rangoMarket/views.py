@@ -17,6 +17,8 @@ def home(request):
 def home_old(request):
     return render(request, 'rangoMarket/home-old.html')
 
+def about(request):
+    return render(request, 'rangoMarket/about.html')
 
 @login_required
 def my_post(request):
