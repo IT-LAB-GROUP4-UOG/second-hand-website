@@ -16,8 +16,9 @@
         <p>Buyer: {{ order.buyer.username }} - Email: {{ order.buyer.email }}</p>
         <p>Seller: {{ order.seller.username }} - Email: {{ order.seller.email }}</p>
     </div>
-</div>
+
     {% if order.status == 'PENDING' %}
+      <div class="buttons-container">
         <!-- finish order button -->
         <div>
             {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
@@ -36,7 +37,8 @@
             {% endif %}
         </div>
     {% endif %}
-
+       </div>
+</div>
 
     <script>
         document.getElementById('cancelOrderBtn')?.addEventListener('click', async function () {
