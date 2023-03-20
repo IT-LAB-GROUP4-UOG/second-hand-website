@@ -1,0 +1,27 @@
+.order-details-container {
+width:800px;
+    height:600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-right:auto;
+    margin-left:auto;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+}
+.order-details-container img {
+    max-width: 50%;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+.order-details-container p {
+    margin-bottom: 10px;
+    font-size:20px;
+}
+.order-image {
+    width: 150px;
+    height: 200px;
+    padding:30px;
+}

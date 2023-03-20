@@ -1,0 +1,20 @@
+.sell-container {
+  width: 900px;
+  height: 600px;
+  margin: 30px auto 0 auto;
+  background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.sell-title {
+  text-align: center;
+  margin: 0;
+}
+
+.sell-content {
+  margin-top: 20px;
+}
