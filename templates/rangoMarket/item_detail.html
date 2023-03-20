@@ -30,20 +30,21 @@
                 <p class="product-description">Description: {{ item.description }}</p>
                 <p class="product-description">
                 <p>Posted on: {{ item.created_at|date:"F j, Y, P" }}</p>
+
+                <!-- Buy button -->
+                <p>
+                    {% if user.is_authenticated and item.seller != user %}
+                        <button id="buyBtn" class="btn btn-primary" data-item-id="{{ item.id }}">Buy</button>
+                        <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+                    {% endif %}
                 </p>
             </div>
-            <p>
-                {% if user.is_authenticated and item.seller != user %}
-                    <button id="buyBtn" class="btn btn-primary" data-item-id="{{ item.id }}">Finish Order</button>
-                    <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
-                {% endif %}
-            </p>
         </div>
     </div>
 
 
  <script>
-        document.getElementById('buy-button').addEventListener('click', async function() {
+        document.getElementById('buyBtn').addEventListener('click', async function() {
             if (confirm("Are you sure you want to buy this item?")) {
                 const csrfToken = document.getElementById('csrf-token').value;
                 const itemId = this.dataset.itemId;

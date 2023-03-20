@@ -12,7 +12,10 @@
     {% if order.status == 'PENDING' %}
         <!-- finish order button -->
         <div>
-            {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
+            {% if order.buyer == user and not order.buyer_confirmed %}
+                <button id="finishOrderBtn" class="btn btn-primary">Finish Order</button>
+                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+            {% elif order.seller == user and not order.seller_confirmed %}
                 <button id="finishOrderBtn" class="btn btn-primary">Finish Order</button>
                 <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
             {% endif %}
@@ -20,6 +23,9 @@
         <!-- cancel order button -->
         <div>
             {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
+                <button id="cancelOrderBtn" class="btn btn-danger">Cancel Order</button>
+                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+            {% elif order.seller == user and not order.seller_confirmed %}
                 <button id="cancelOrderBtn" class="btn btn-danger">Cancel Order</button>
                 <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
             {% endif %}

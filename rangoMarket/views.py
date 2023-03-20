@@ -8,7 +8,7 @@ from django.http import JsonResponse
 
 
 def home(request):
-    items_list = Item.objects.all()
+    items_list = Item.objects.exclude(order__status__in=['PENDING', 'FINISHED'])
     paginator = Paginator(items_list, 8)
     page = request.GET.get('page')
     items = paginator.get_page(page)
@@ -25,7 +25,7 @@ def about(request):
 
 @login_required
 def my_post(request):
-    items_list = Item.objects.filter(seller=request.user)
+    items_list = Item.objects.filter(seller=request.user).exclude(order__status__in=['PENDING', 'FINISHED'])
     paginator = Paginator(items_list, 8)
     page = request.GET.get('page')
     items = paginator.get_page(page)
