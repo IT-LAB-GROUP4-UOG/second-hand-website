@@ -34,12 +34,14 @@ def my_post(request):
 
 @login_required
 def my_sell(request):
-    return
+    orders = Order.objects.filter(seller=request.user)
+    return render(request, 'rangoMarket/my_sell.html', {'orders': orders})
 
 
 @login_required
 def my_purchase(request):
-    return HttpResponse(request, "My Purchase")
+    orders = Order.objects.filter(buyer=request.user)
+    return render(request, 'rangoMarket/my_purchase.html', {'orders': orders})
 
 
 @login_required
@@ -86,6 +88,18 @@ def buy_item(request, item_id):
         return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
 
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.user == order.seller:
+        order.status = 'CANCELLED'
+        order.save()
+        return redirect(reverse('rangoMarket:my_sell'))
+    if request.user == order.buyer:
+        order.status = 'CANCELLED'
+        order.save()
+        return redirect(reverse('rangoMarket:my_purchase'))
+    else:
+        return HttpResponseForbidden("You don't have permission ti cancel this order.")
 
 
 
