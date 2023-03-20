@@ -36,13 +36,19 @@ def my_post(request):
 
 @login_required
 def my_sell(request):
-    orders = Order.objects.filter(seller=request.user)
+    orders_list = Order.objects.filter(seller=request.user)
+    paginator = Paginator(orders_list, 8)
+    page = request.GET.get('page')
+    orders = paginator.get_page(page)
     return render(request, 'rangoMarket/my_sell.html', {'orders': orders})
 
 
 @login_required
 def my_purchase(request):
-    orders = Order.objects.filter(buyer=request.user)
+    orders_list = Order.objects.filter(buyer=request.user)
+    paginator = Paginator(orders_list, 8)
+    page = request.GET.get('page')
+    orders = paginator.get_page(page)
     return render(request, 'rangoMarket/my_purchase.html', {'orders': orders})
 
 

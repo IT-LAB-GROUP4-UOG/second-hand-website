@@ -1,12 +1,75 @@
 {% extends 'rangoMarket/base.html' %}
 
+{% block title_block %}
+    My purchase
+{% endblock %}
+
 {% block body_block %}
-    <h2>My Purchase</h2>
-    <ul>
+
+    <div class="item-container">
         {% for order in orders %}
-            <li><a href="{% url 'rangoMarket:order_detail' order_id=order.id %}">{{ order.item.title }} - Status: {{ order.get_status_display }}</a></li>
+            <div class="item">
+                <a href="{% url 'rangoMarket:order_detail' order_id=order.id %}">
+                    {% if order.item.images.all %}
+                        <img src="{{ order.item.images.all.0.image.url }}" alt="Item {{ forloop.counter }}" border="0">
+                    {% else %}
+                        <img src="https://via.placeholder.com/150" alt="No image available">
+                    {% endif %}
+
+                    <div class="item-font">{{ order.item.title }}</div>
+                    <div class="item-font">{{ order.get_status_display }}</div>
+                    <p>£{{ order.item.price|floatformat:2 }}</p>
+                </a>
+            </div>
         {% empty %}
             <li>No orders found.</li>
         {% endfor %}
-    </ul>
+    </div>
+
+    <!-- Pagination -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if orders.has_previous %}
+                            <li><a href="?page=1">&laquo;</a></li>
+                            <li><a href="?page={{ orders.previous_page_number }}">Previous</a></li>
+                        {% else %}
+                            <li class="disabled"><a>&laquo;</a></li>
+                            <li class="disabled"><a>Previous</a></li>
+                        {% endif %}
+
+                        {% for i in orders.paginator.page_range %}
+                            {% if orders.number == i %}
+                                <li class="active"><a>{{ i }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if orders.has_next %}
+                            <li><a href="?page={{ orders.next_page_number }}">Next</a></li>
+                            <li><a href="?page={{ orders.paginator.num_pages }}">&raquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><a>Next</a></li>
+                            <li class="disabled"><a>&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+
+{#{% block body_block %}#}
+{#    <h2>My Purchase</h2>#}
+{#    <ul>#}
+{#        {% for order in orders %}#}
+{#            <li><a href="{% url 'rangoMarket:order_detail' order_id=order.id %}">{{ order.item.title }} - Status: {{ order.get_status_display }}</a></li>#}
+{#        {% empty %}#}
+{#            <li>No orders found.</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#{% endblock %}#}
