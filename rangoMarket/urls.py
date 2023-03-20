@@ -17,6 +17,6 @@ urlpatterns = [
     path('order_detail/<int:order_id>', views.order_detail, name='order_detail'),
     path('order/<int:order_id>/cancel/', views.cancel_order, name='cancel_order'),
     path('order/<int:order_id>/finish/', views.finish_order, name='finish_order'),
-
+    path('item/<int:item_id>/withdraw/', views.withdraw_post, name='withdraw_post'),
 
 ]

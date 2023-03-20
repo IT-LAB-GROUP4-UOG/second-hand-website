@@ -9,6 +9,7 @@ from django.http import JsonResponse
 
 def home(request):
     items_list = Item.objects.exclude(order__status__in=['PENDING', 'FINISHED', 'CANCELED'])
+    items_list = items_list.filter(withdrawn=False).order_by('-created_at')
     paginator = Paginator(items_list, 8)
     page = request.GET.get('page')
     items = paginator.get_page(page)
@@ -26,6 +27,7 @@ def about(request):
 @login_required
 def my_post(request):
     items_list = Item.objects.filter(seller=request.user).exclude(order__status__in=['PENDING', 'FINISHED', 'CANCELED'])
+    items_list = items_list.filter(withdrawn=False).order_by('-created_at')
     paginator = Paginator(items_list, 8)
     page = request.GET.get('page')
     items = paginator.get_page(page)
@@ -122,6 +124,20 @@ def finish_order(request, order_id):
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
+
+@login_required
+def withdraw_post(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+
+    if request.method == 'POST':
+        if request.user == item.seller:
+            item.withdrawn = True
+            item.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'message': "You don't have permission to withdraw this post."})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
 
