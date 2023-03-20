@@ -17,8 +17,10 @@ def home(request):
 def home_old(request):
     return render(request, 'rangoMarket/home-old.html')
 
+
 def about(request):
     return render(request, 'rangoMarket/about.html')
+
 
 @login_required
 def my_post(request):
@@ -30,7 +32,12 @@ def my_post(request):
 
 
 @login_required
-def purchase(request):
+def my_sell(request):
+    return
+
+
+@login_required
+def my_purchase(request):
     return HttpResponse(request, "My Purchase")
 
 
