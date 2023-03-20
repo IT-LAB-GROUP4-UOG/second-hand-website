@@ -7,12 +7,65 @@
     <p>Status: {{ order.get_status_display }}</p>
     <p>Buyer: {{ order.buyer.username }} - Email: {{ order.buyer.email }}</p>
     <p>Seller: {{ order.seller.username }} - Email: {{ order.seller.email }}</p>
-    {% if user == order.seller or user == order.buyer %}
-        {% if order.status != 'CANCELLED' %}
-         <form method="post" action="{% url 'rangoMarket:cancel_order' order_id=order.id %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Cancel Order</button>
-        </form>
-        {% endif %}
+
+
+    {% if order.status == 'PENDING' %}
+        <!-- finish order button -->
+        <div>
+            {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
+                <button id="finishOrderBtn" class="btn btn-primary">Finish Order</button>
+                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+            {% endif %}
+        </div>
+        <!-- cancel order button -->
+        <div>
+            {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
+                <button id="cancelOrderBtn" class="btn btn-danger">Cancel Order</button>
+                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+            {% endif %}
+        </div>
     {% endif %}
+
+    <script>
+        document.getElementById('cancelOrderBtn')?.addEventListener('click', async function () {
+            if (confirm("Are you sure you want to finish this order?")) {
+                const csrfToken = document.getElementById('csrf-token').value;
+                const orderId = this.dataset.orderId;
+                const response = await fetch(`/order/${orderId}/cancel/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken
+                    },
+                });
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('Order cancelled successfully');
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'An error occurred');
+                }
+            }
+        });
+        document.getElementById('finishOrderBtn')?.addEventListener('click', async function () {
+            if (confirm("Are you sure you want to finish this order?")) {
+                const csrfToken = document.getElementById('csrf-token').value;
+                const orderId = this.dataset.orderId;
+                const response = await fetch(`/order/${orderId}/finish/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken
+                    },
+                });
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('Order finished successfully');
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'An error occurred');
+                }
+            }
+        });
+    </script>
 {% endblock %}

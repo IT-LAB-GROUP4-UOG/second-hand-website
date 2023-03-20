@@ -34,7 +34,7 @@
             </div>
             <p>
                 {% if user.is_authenticated and item.seller != user %}
-                    <button id="buy-button" data-item-id="{{ item.id }}">Buy</button>
+                    <button id="buyBtn" class="btn btn-primary" data-item-id="{{ item.id }}">Finish Order</button>
                     <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
                 {% endif %}
             </p>

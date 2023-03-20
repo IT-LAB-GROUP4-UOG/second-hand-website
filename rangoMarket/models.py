@@ -40,6 +40,9 @@ class Order(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    buyer_confirmed = models.BooleanField(default=False)
+    seller_confirmed = models.BooleanField(default=False)
+
     def __str__(self):
         return self.item.__str__() + " <from> " + self.seller.username \
             + " <to> " + self.buyer.username + " <status> " + self.status
