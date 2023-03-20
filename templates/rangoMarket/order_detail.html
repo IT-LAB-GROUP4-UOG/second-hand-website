@@ -7,4 +7,12 @@
     <p>Status: {{ order.get_status_display }}</p>
     <p>Buyer: {{ order.buyer.username }} - Email: {{ order.buyer.email }}</p>
     <p>Seller: {{ order.seller.username }} - Email: {{ order.seller.email }}</p>
+    {% if user == order.seller or user == order.buyer %}
+        {% if order.status != 'CANCELLED' %}
+         <form method="post" action="{% url 'rangoMarket:cancel_order' order_id=order.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cancel Order</button>
+        </form>
+        {% endif %}
+    {% endif %}
 {% endblock %}
