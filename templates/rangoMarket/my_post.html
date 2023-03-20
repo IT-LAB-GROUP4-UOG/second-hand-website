@@ -6,11 +6,15 @@
 
 
 {% block body_block %}
-    <p class="h2">
+<link rel="stylesheet" href="../static/my_post.css" />
+<div class="post">
+    <p class="post-font" style="display: inline-block;">
         Wish to post new item?
-        <a href="{% url 'rangoMarket:post_item' %}">Post it here!</a>
+        <div style="display: inline-block; margin-left: 10px;">
+            <a href="{% url 'rangoMarket:post_item' %}" class="btn btn-info btn-lg">Post it here!</a>
+        </div>
     </p>
-
+</div>
 
     <div class="item-container">
         {% for item in items %}

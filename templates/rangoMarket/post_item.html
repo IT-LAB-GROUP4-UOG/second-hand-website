@@ -5,11 +5,21 @@
 {% endblock %}
 
 {% block body_block %}
-    <h2>Post a new item</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Post Item</button>
-    </form>
+<link rel="stylesheet" href="../static/post_item.css" />
+
+
+<div class="post_container">
+    <div class="title_title">
+        <h2>Post a new item</h2>
+    </div>
+    <div class="form_css">
+        <form method="post" enctype="multipart/form-data" >
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-info btn-lg">Post Item</button>
+        </form>
+    </div>
+</div>
+
 
 {% endblock %}
