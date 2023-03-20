@@ -9,32 +9,53 @@
     <p>Seller: {{ order.seller.username }} - Email: {{ order.seller.email }}</p>
 
 
+
     {% if order.status == 'PENDING' %}
-        <!-- finish order button -->
-        <div>
-            {% if order.buyer == user and not order.buyer_confirmed %}
-                <button id="finishOrderBtn" class="btn btn-primary">Finish Order</button>
-                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
-            {% elif order.seller == user and not order.seller_confirmed %}
-                <button id="finishOrderBtn" class="btn btn-primary">Finish Order</button>
-                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
-            {% endif %}
-        </div>
-        <!-- cancel order button -->
-        <div>
-            {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
-                <button id="cancelOrderBtn" class="btn btn-danger">Cancel Order</button>
-                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
-            {% elif order.seller == user and not order.seller_confirmed %}
-                <button id="cancelOrderBtn" class="btn btn-danger">Cancel Order</button>
-                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
-            {% endif %}
-        </div>
-    {% endif %}
+    <!-- finish order button -->
+    <div>
+        {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
+            <button id="finishOrderBtn" data-order-id="{{ order.id }}" class="btn btn-primary">Finish Order</button>
+            <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+        {% endif %}
+    </div>
+    <!-- cancel order button -->
+    <div>
+        {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}
+            <button id="cancelOrderBtn" data-order-id="{{ order.id }}" class="btn btn-danger">Cancel Order</button>
+            <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+        {% endif %}
+    </div>
+{% endif %}
+
+
+
+
+{#    {% if order.status == 'PENDING' %}#}
+{#        <!-- finish order button -->#}
+{#        <div>#}
+{#            {% if order.buyer == user and not order.buyer_confirmed %}#}
+{#                <button id="finishOrderBtn" class="btn btn-primary">Finish Order</button>#}
+{#                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">#}
+{#            {% elif order.seller == user and not order.seller_confirmed %}#}
+{#                <button id="finishOrderBtn" class="btn btn-primary">Finish Order</button>#}
+{#                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">#}
+{#            {% endif %}#}
+{#        </div>#}
+{#        <!-- cancel order button -->#}
+{#        <div>#}
+{#            {% if order.buyer == user and not order.buyer_confirmed or order.seller == user and not order.seller_confirmed %}#}
+{#                <button id="cancelOrderBtn" class="btn btn-danger">Cancel Order</button>#}
+{#                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">#}
+{#            {% elif order.seller == user and not order.seller_confirmed %}#}
+{#                <button id="cancelOrderBtn" class="btn btn-danger">Cancel Order</button>#}
+{#                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    {% endif %}#}
 
     <script>
         document.getElementById('cancelOrderBtn')?.addEventListener('click', async function () {
-            if (confirm("Are you sure you want to finish this order?")) {
+            if (confirm("Are you sure you want to cancel this order?")) {
                 const csrfToken = document.getElementById('csrf-token').value;
                 const orderId = this.dataset.orderId;
                 const response = await fetch(`/order/${orderId}/cancel/`, {

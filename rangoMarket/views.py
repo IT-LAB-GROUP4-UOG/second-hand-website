@@ -88,18 +88,19 @@ def buy_item(request, item_id):
         return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
 
+@login_required
 def cancel_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    if request.user == order.seller:
-        order.status = 'CANCELLED'
-        order.save()
-        return redirect(reverse('rangoMarket:my_sell'))
-    if request.user == order.buyer:
-        order.status = 'CANCELLED'
-        order.save()
-        return redirect(reverse('rangoMarket:my_purchase'))
+
+    if request.method == 'POST':
+        if request.user == order.buyer or request.user == order.seller:
+            order.status = 'CANCELLED'
+            order.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'message': "You don't have permission to cancel this order."})
     else:
-        return HttpResponseForbidden("You don't have permission to cancel this order.")
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
 @login_required
