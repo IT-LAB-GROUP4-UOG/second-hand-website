@@ -99,7 +99,28 @@ def cancel_order(request, order_id):
         order.save()
         return redirect(reverse('rangoMarket:my_purchase'))
     else:
-        return HttpResponseForbidden("You don't have permission ti cancel this order.")
+        return HttpResponseForbidden("You don't have permission to cancel this order.")
+
+
+@login_required
+def finish_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        if order.buyer == request.user:
+            order.buyer_confirmed = True
+        elif order.seller == request.user:
+            order.seller_confirmed = True
+        else:
+            return JsonResponse({'status': 'error', 'message': 'You are not authorized to finish this order.'})
+
+        if order.buyer_confirmed and order.seller_confirmed:
+            order.status = 'FINISHED'
+
+        order.save()
+        return JsonResponse({'status': 'success'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
 
 
 
